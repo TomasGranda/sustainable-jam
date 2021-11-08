@@ -2,47 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementState : BaseStateMachineState
+namespace PlayerStates
 {
-    private Commands commands;
-
-    private StateMachine stateMachine;
-    private PlayerModel model;
-    private PlayerView view;
-
-    private GameMaster gameMaster;
-
-    public MovementState(StateMachine stateMachine, PlayerModel model, PlayerView view, Rigidbody2D rigidbody2D)
+    public class MovementState : BaseStateMachineState
     {
-        commands = new Commands();
-        this.gameMaster = GameMaster.GetGameMaster();
+        private Commands commands;
 
-        MoveCommand moveCommand = new MoveCommand(model, view, rigidbody2D);
-        JumpCommand jumpCommand = new JumpCommand(model, view, rigidbody2D, gameMaster.floorLayer);
+        private StateMachine stateMachine;
+        private PlayerModel model;
+        private PlayerView view;
 
-        commands.AddKeysCommand(moveCommand, KeyCode.A, KeyCode.D);
-        commands.AddKeysCommand(jumpCommand, KeyCode.Space);
+        private GameMaster gameMaster;
 
-        this.stateMachine = stateMachine;
-        this.model = model;
-        this.view = view;
-    }
+        public Vector2 position;
 
-    public override void ExecuteState()
-    {
-        commands.ExecuteCommands();
-        ToCombat();
-    }
-
-    private void ToCombat()
-    {
-        if (Physics2D.OverlapCircle(model.transform.position, model.combatTriggerRange, gameMaster.enemyLayer))
+        public MovementState(StateMachine stateMachine, PlayerModel model, PlayerView view, Rigidbody2D rigidbody2D)
         {
-            stateMachine.Transition<CombatState>();
+            commands = new Commands();
+            this.gameMaster = GameMaster.GetGameMaster();
+
+            MoveCommand moveCommand = new MoveCommand(model, view, rigidbody2D);
+            JumpCommand jumpCommand = new JumpCommand(model, view, rigidbody2D, gameMaster.floorLayer);
+
+            commands.AddKeysCommand(moveCommand, KeyCode.A, KeyCode.D);
+            commands.AddKeysCommand(jumpCommand, KeyCode.Space);
+
+            this.stateMachine = stateMachine;
+            this.model = model;
+            this.view = view;
+        }
+
+        public override void ExecuteState()
+        {
+            commands.ExecuteCommands();
+            ToCombat();
+        }
+
+        private void ToCombat()
+        {
+            // TODO: Revisar sistema de colision
+            if (Physics2D.OverlapCircle(model.transform.position, model.combatTriggerRange, gameMaster.enemyLayer))
+            {
+                stateMachine.Transition<CombatState>();
+            }
+        }
+
+        public override void OnEnterState()
+        {
+            model.transform.position = position;
+        }
+
+        public override void OnExitState()
+        {
+            position = model.transform.position;
         }
     }
-
-    public override void OnEnterState() { }
-
-    public override void OnExitState() { }
 }

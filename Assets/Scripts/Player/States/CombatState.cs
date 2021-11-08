@@ -2,15 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatState : BaseStateMachineState
+namespace PlayerStates
 {
-    public override void ExecuteState()
+    public class CombatState : BaseStateMachineState
     {
+        private StateMachine stateMachine;
 
-        Debug.Log("pepe");
+        public CombatState(StateMachine stateMachine)
+        {
+            this.stateMachine = stateMachine;
+        }
+
+        public override void ExecuteState()
+        {
+        }
+
+        public override void OnEnterState()
+        {
+            // TODO: Revisar quitar fisicas al cambiar de estado
+        }
+
+        public override void OnExitState()
+        {
+
+        }
     }
-
-    public override void OnEnterState() { }
-
-    public override void OnExitState() { }
 }

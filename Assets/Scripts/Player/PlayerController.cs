@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerStates;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
         stateMachine = new StateMachine();
 
         MovementState movementState = new MovementState(stateMachine, model, view, GetComponent<Rigidbody2D>());
-        CombatState combatState = new CombatState();
+        CombatState combatState = new CombatState(stateMachine);
 
         movementState.AddTransition(combatState);
         combatState.AddTransition(movementState);

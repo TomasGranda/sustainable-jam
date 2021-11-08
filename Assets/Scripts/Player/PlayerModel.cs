@@ -14,4 +14,6 @@ public class PlayerModel : MonoBehaviour
 
     public float combatTriggerRange;
 
+    public List<GameObject> team = new List<GameObject>();
+
 }
