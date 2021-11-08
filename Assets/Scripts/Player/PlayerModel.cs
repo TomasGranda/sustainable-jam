@@ -9,6 +9,9 @@ public class PlayerModel : MonoBehaviour
     public float jumpForce;
 
     public float fallGravityScale;
+
     public float defaultGravityScale;
+
+    public float combatTriggerRange;
 
 }

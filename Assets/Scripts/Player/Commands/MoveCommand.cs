@@ -22,7 +22,6 @@ public class MoveCommand : Command
         Vector2 movement = model.transform.right * axis * model.speed;
 
         rigidbody.velocity = new Vector2(movement.x, rigidbody.velocity.y);
-        // model.transform.Translate(movement * model.speed * Time.deltaTime);
     }
 
     public void ExecuteDown() { }

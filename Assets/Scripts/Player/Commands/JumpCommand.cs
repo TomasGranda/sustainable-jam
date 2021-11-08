@@ -23,7 +23,6 @@ public class JumpCommand : Command
 
     public void ExecuteDown()
     {
-        Debug.Log(Physics2D.Raycast(model.transform.position, Vector2.down, 0.6f));
         if (Physics2D.Raycast(model.transform.position, Vector2.down, 0.6f, floorLayer))
         {
             rigidbody.AddForce(Vector2.up * model.jumpForce, ForceMode2D.Impulse);

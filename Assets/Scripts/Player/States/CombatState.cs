@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class CombatState : BaseStateMachineState
 {
-    public override void ExecuteState() { }
+    public override void ExecuteState()
+    {
+
+        Debug.Log("pepe");
+    }
 
     public override void OnEnterState() { }
 

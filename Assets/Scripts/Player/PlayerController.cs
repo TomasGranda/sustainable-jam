@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Commands commands;
     private PlayerModel model;
     private PlayerView view;
 
-    private GameMaster gameMaster;
+    private StateMachine stateMachine;
 
     void Start()
     {
-        gameMaster = GameMaster.GetGameMaster();
         view = GetComponent<PlayerView>();
         model = GetComponent<PlayerModel>();
 
-        commands = new Commands();
+        stateMachine = new StateMachine();
 
-        MoveCommand moveCommand = new MoveCommand(model, view, GetComponent<Rigidbody2D>());
-        JumpCommand jumpCommand = new JumpCommand(model, view, GetComponent<Rigidbody2D>(), gameMaster.floorLayer);
+        MovementState movementState = new MovementState(stateMachine, model, view, GetComponent<Rigidbody2D>());
+        CombatState combatState = new CombatState();
 
-        commands.AddKeysCommand(moveCommand, KeyCode.A, KeyCode.D);
-        commands.AddKeysCommand(jumpCommand, KeyCode.Space);
+        movementState.AddTransition(combatState);
+        combatState.AddTransition(movementState);
+
+        stateMachine.Init(movementState);
     }
 
     void Update()
     {
-        commands.ExecuteCommands();
+        stateMachine.OnUpdate();
     }
 }

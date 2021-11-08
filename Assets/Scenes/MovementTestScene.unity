@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 2002446993}
   - component: {fileID: 2002446992}
   - component: {fileID: 2002446991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,6 +596,10 @@ PrefabInstance:
     - target: {fileID: 1584616911168802143, guid: c00aa82c5ba0dc040bad96043bb85b90, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584616911168802146, guid: c00aa82c5ba0dc040bad96043bb85b90, type: 3}
+      propertyPath: combatTriggerRange
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c00aa82c5ba0dc040bad96043bb85b90, type: 3}
