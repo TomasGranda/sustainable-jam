@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
         IdleState idleState = new IdleState();
         TurnState turnState = new TurnState();
 
-        MovementState movementState = new MovementState();
+        MovementState movementState = new MovementState(stateMachine, GetComponent<Rigidbody2D>());
 
         idleState.AddTransition(turnState);
         turnState.AddTransition(idleState);

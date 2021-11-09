@@ -35,21 +35,17 @@ namespace PlayerStates
         public override void ExecuteState()
         {
             commands.ExecuteCommands();
-            ToCombat();
         }
 
-        private void ToCombat()
+        private void ToCombat(params object[] _)
         {
-            // TODO: Revisar sistema de colision
-            if (Physics2D.OverlapCircle(model.transform.position, model.combatTriggerRange, gameMaster.enemyLayer))
-            {
-                stateMachine.Transition<CombatState>();
-            }
+            stateMachine.Transition<CombatState>();
         }
 
         public override void OnEnterState()
         {
             model.transform.position = position;
+            EventManager.Subscribe(EventManager.Parameter.StartCombat, ToCombat);
         }
 
         public override void OnExitState()

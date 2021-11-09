@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
         stateMachine = new StateMachine();
 
         MovementState movementState = new MovementState(stateMachine, model, view, GetComponent<Rigidbody2D>());
-        CombatState combatState = new CombatState(stateMachine);
+        CombatState combatState = new CombatState(stateMachine, GetComponent<Rigidbody2D>());
 
         movementState.AddTransition(combatState);
         combatState.AddTransition(movementState);

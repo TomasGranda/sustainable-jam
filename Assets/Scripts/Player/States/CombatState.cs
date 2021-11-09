@@ -7,10 +7,12 @@ namespace PlayerStates
     public class CombatState : BaseStateMachineState
     {
         private StateMachine stateMachine;
+        private Rigidbody2D rigidbody;
 
-        public CombatState(StateMachine stateMachine)
+        public CombatState(StateMachine stateMachine, Rigidbody2D rigidbody)
         {
             this.stateMachine = stateMachine;
+            this.rigidbody = rigidbody;
         }
 
         public override void ExecuteState()
@@ -19,7 +21,7 @@ namespace PlayerStates
 
         public override void OnEnterState()
         {
-            // TODO: Revisar quitar fisicas al cambiar de estado
+            rigidbody.velocity = Vector2.zero;
         }
 
         public override void OnExitState()
