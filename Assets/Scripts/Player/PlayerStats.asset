@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 50
   initiative: 2
+  allied: 1

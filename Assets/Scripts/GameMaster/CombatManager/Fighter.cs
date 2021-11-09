@@ -10,4 +10,6 @@ public class Fighter : ScriptableObject
 
     public int initiative;
 
+    public bool allied;
+
 }

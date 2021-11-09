@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98af32bd4166cd64f8fa7803b59c45ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: f977970125f54404d945475ba48e1ab1, type: 2}
   combatStage: {fileID: 0}
   team:
   - {fileID: 6011255716026191531}
-  stats: {fileID: 11400000, guid: f977970125f54404d945475ba48e1ab1, type: 2}

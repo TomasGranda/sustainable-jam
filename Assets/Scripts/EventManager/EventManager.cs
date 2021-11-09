@@ -10,7 +10,8 @@ public class EventManager
     {
         StartCombat,
         TurnEnds,
-        TurnStarts
+        TurnStarts,
+        Action,
     }
 
     public static void Subscribe(Parameter subscribedEvent, Action<object[]> function)

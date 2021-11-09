@@ -29,7 +29,7 @@ namespace PlayerStates
             this.view = view;
         }
         
-        public override void OnEnterState()
+        public override void OnEnterState(params object[] objects)
         {
             model.transform.position = position;
             
@@ -43,7 +43,7 @@ namespace PlayerStates
 
         private void ToCombat(params object[] _)
         {
-            stateMachine.Transition<CombatState>();
+            stateMachine.Transition<IdleCombatState>();
         }
 
         public override void OnExitState()

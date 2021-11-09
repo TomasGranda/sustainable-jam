@@ -17,7 +17,12 @@ public class StateMachine
         current.ExecuteState();
     }
 
-    public void Transition<T>() where T : BaseStateMachineState
+    // public void Transition<T>() where T : BaseStateMachineState
+    // {
+    //     Transition<T>();
+    // }
+
+    public void Transition<T>(params object[] objects) where T : BaseStateMachineState
     {
         var state = current.GetTransition<T>();
 
@@ -27,6 +32,6 @@ public class StateMachine
 
         current = state;
 
-        current.OnEnterState();
+        current.OnEnterState(objects);
     }
 }

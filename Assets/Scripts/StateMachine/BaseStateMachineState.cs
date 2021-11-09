@@ -6,7 +6,7 @@ public abstract class BaseStateMachineState : StateMachineState
 {
     List<BaseStateMachineState> statesList = new List<BaseStateMachineState>();
 
-    public abstract void OnEnterState();
+    public abstract void OnEnterState(params object[] objects);
     public abstract void ExecuteState();
     public abstract void OnExitState();
 

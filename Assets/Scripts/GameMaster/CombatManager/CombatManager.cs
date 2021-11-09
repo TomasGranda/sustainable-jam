@@ -14,6 +14,10 @@ public class CombatManager : MonoBehaviour
 
     private List<BaseFighter> turnList = new List<BaseFighter>();
 
+    public GameObject combatOptionsPanel;
+
+    private Stage currentStage;
+
     private int currentTurn = 0;
 
     private void Start()
@@ -24,28 +28,35 @@ public class CombatManager : MonoBehaviour
 
     private void OnTurnEnds(params object[] objects)
     {
+        SetCombatOptions(false);
         currentTurn++;
 
         if (currentTurn > turnList.Count - 1)
             currentTurn = 0;
 
+        StartTurn();
+    }
+
+    private void StartTurn()
+    {
+        SetCombatOptions(turnList[currentTurn].stats.allied);
         EventManager.CallEvent(EventManager.Parameter.TurnStarts, turnList[currentTurn]);
     }
 
     private void StartCombat(params object[] objects)
     {
-        Stage stage = (Stage)objects[0];
+        currentStage = (Stage)objects[0];
         List<GameObject> enemyTeam = (List<GameObject>)objects[1];
         List<GameObject> playerTeam = (List<GameObject>)objects[2];
 
-        SetFightersPositions(stage, enemyTeam, playerTeam);
+        SetFightersPositions(currentStage, enemyTeam, playerTeam);
 
         SetTurnList(enemyTeam.Select((gm) => gm.GetComponent<BaseFighter>()).ToList(), playerTeam.Select((gm) => gm.GetComponent<BaseFighter>()).ToList());
 
         Camera.main.gameObject.SetActive(false);
-        stage.stageCamera.SetActive(true);
+        currentStage.stageCamera.SetActive(true);
 
-        EventManager.CallEvent(EventManager.Parameter.TurnStarts, turnList.First());
+        StartTurn();
     }
 
     private void SetTurnList(List<BaseFighter> enemyTeam, List<BaseFighter> playerTeam)
@@ -72,5 +83,37 @@ public class CombatManager : MonoBehaviour
                 playerTeam[i].transform.position = stage.playerTeamPositions[i].position;
             else break;
         }
+    }
+
+    public void OnAttackButtonDown()
+    {
+        MakeAction(Parameter.Attack);
+    }
+    public void OnMagicButtonDown()
+    {
+        MakeAction(Parameter.Magic);
+    }
+    public void OnSkipButtonDown()
+    {
+        MakeAction(Parameter.Skip);
+    }
+
+    public void MakeAction(Parameter action)
+    {
+        SetCombatOptions(false);
+        EventManager.CallEvent(EventManager.Parameter.Action, action, currentStage);
+    }
+
+    private void SetCombatOptions(bool state)
+    {
+        combatOptionsPanel.SetActive(state);
+    }
+
+
+    public enum Parameter
+    {
+        Attack,
+        Magic,
+        Skip,
     }
 }

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerStates
+namespace EnemyStates
 {
-    public class CombatState : BaseStateMachineState
+    public class IdleCombatState : BaseStateMachineState
     {
         private StateMachine stateMachine;
         private Rigidbody2D rigidbody;
 
-        public CombatState(StateMachine stateMachine, Rigidbody2D rigidbody)
+        public IdleCombatState(StateMachine stateMachine, Rigidbody2D rigidbody)
         {
             this.stateMachine = stateMachine;
             this.rigidbody = rigidbody;
@@ -19,7 +19,7 @@ namespace PlayerStates
         {
         }
 
-        public override void OnEnterState()
+        public override void OnEnterState(params object[] objects)
         {
             rigidbody.velocity = Vector2.zero;
             EventManager.Subscribe(EventManager.Parameter.TurnStarts, OnTurnStars);
@@ -27,7 +27,11 @@ namespace PlayerStates
 
         private void OnTurnStars(params object[] objects)
         {
-
+            var fighter = (BaseFighter)objects[0];
+            if (fighter.name == rigidbody.name)
+            {
+                stateMachine.Transition<TurnCombatState>();
+            }
         }
 
         public override void OnExitState()

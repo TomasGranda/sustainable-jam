@@ -22,10 +22,10 @@ namespace EnemyStates
 
         private void ToCombat(params object[] _)
         {
-            stateMachine.Transition<IdleState>();
+            stateMachine.Transition<IdleCombatState>();
         }
 
-        public override void OnEnterState()
+        public override void OnEnterState(params object[] objects)
         {
             EventManager.Subscribe(EventManager.Parameter.StartCombat, ToCombat);
         }

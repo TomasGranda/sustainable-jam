@@ -1,6 +1,6 @@
 public interface StateMachineState
 {
-    void OnEnterState();
+    void OnEnterState(params object[] objects);
     void ExecuteState();
     void OnExitState();
 
