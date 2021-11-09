@@ -487,10 +487,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1584616911168802146, guid: c00aa82c5ba0dc040bad96043bb85b90, type: 3}
-      propertyPath: combatTriggerRange
-      value: 0.55
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c00aa82c5ba0dc040bad96043bb85b90, type: 3}
 --- !u!1001 &5581547073450840493

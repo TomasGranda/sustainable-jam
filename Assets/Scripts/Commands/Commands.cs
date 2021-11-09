@@ -36,7 +36,6 @@ public class Commands
         {
             if (command.Key.Any((k) => Input.GetKey(k)))
             {
-                Debug.Log("Mantengo");
                 command.Value.Execute();
             }
             else
@@ -46,7 +45,6 @@ public class Commands
 
             if (command.Key.Any((k) => Input.GetKeyDown(k)))
             {
-                Debug.Log("Preciono");
                 command.Value.ExecuteDown();
             }
         }

@@ -8,7 +8,9 @@ public class EventManager
 
     public enum Parameter
     {
-        StartCombat
+        StartCombat,
+        TurnEnds,
+        TurnStarts
     }
 
     public static void Subscribe(Parameter subscribedEvent, Action<object[]> function)

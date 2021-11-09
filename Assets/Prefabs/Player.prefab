@@ -164,6 +164,6 @@ MonoBehaviour:
   jumpForce: 10
   fallGravityScale: 4
   defaultGravityScale: 2
-  combatTriggerRange: 0.5
   team:
   - {fileID: 1584616911168802143}
+  stats: {fileID: 11400000, guid: 7b210ebb60cd90846bdd4eeb3371a834, type: 2}

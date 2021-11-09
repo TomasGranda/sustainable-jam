@@ -22,11 +22,17 @@ namespace PlayerStates
         public override void OnEnterState()
         {
             rigidbody.velocity = Vector2.zero;
+            EventManager.Subscribe(EventManager.Parameter.TurnStarts, OnTurnStars);
+        }
+
+        private void OnTurnStars(params object[] objects)
+        {
+
         }
 
         public override void OnExitState()
         {
-
+            EventManager.Unsubscribe(EventManager.Parameter.TurnStarts, OnTurnStars);
         }
     }
 }
