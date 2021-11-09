@@ -23,25 +23,22 @@ public class CombatManager : MonoBehaviour
 
         Camera.main.gameObject.SetActive(false);
         stage.stageCamera.SetActive(true);
-
     }
 
     private void SetFightersPositions(Stage stage, List<GameObject> enemyTeam, List<GameObject> playerTeam)
     {
         for (var i = 0; i < stage.enemyTeamPositions.Count; i++)
         {
-            enemyTeam[i].transform.position = stage.enemyTeamPositions[i].position;
+            if (enemyTeam[i] != null)
+                enemyTeam[i].transform.position = stage.enemyTeamPositions[i].position;
+            else break;
         }
 
         for (var i = 0; i < stage.playerTeamPositions.Count; i++)
         {
-            playerTeam[i].transform.position = stage.playerTeamPositions[i].position;
+            if (playerTeam[i] != null)
+                playerTeam[i].transform.position = stage.playerTeamPositions[i].position;
+            else break;
         }
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        var a = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }

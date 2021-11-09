@@ -6,7 +6,6 @@ using UnityEngine;
 public class Commands
 {
     Dictionary<List<KeyCode>, Command> commandsKeys = new Dictionary<List<KeyCode>, Command>();
-
     private Command defaultCommand;
 
     public Commands(Command defaultCommand)
@@ -37,6 +36,7 @@ public class Commands
         {
             if (command.Key.Any((k) => Input.GetKey(k)))
             {
+                Debug.Log("Mantengo");
                 command.Value.Execute();
             }
             else
@@ -46,6 +46,7 @@ public class Commands
 
             if (command.Key.Any((k) => Input.GetKeyDown(k)))
             {
+                Debug.Log("Preciono");
                 command.Value.ExecuteDown();
             }
         }

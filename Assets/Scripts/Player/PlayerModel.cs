@@ -12,8 +12,5 @@ public class PlayerModel : MonoBehaviour
 
     public float defaultGravityScale;
 
-    public float combatTriggerRange;
-
     public List<GameObject> team = new List<GameObject>();
-
 }

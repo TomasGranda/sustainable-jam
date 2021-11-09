@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class EventManager
 {
-    public delegate void EventCallback(params object[] parameters);
-
-    private static Dictionary<Parameter, EventCallback> eventDictionary;
+    private static Dictionary<Parameter, Action<object[]>> eventDictionary;
 
     public enum Parameter
     {
         StartCombat
     }
 
-    public static void Subscribe(Parameter subscribedEvent, EventCallback function)
+    public static void Subscribe(Parameter subscribedEvent, Action<object[]> function)
     {
         if (eventDictionary == null)
-            eventDictionary = new Dictionary<Parameter, EventCallback>();
+            eventDictionary = new Dictionary<Parameter, Action<object[]>>();
 
         if (!eventDictionary.ContainsKey(subscribedEvent))
             eventDictionary.Add(subscribedEvent, null);
@@ -23,7 +22,7 @@ public class EventManager
         eventDictionary[subscribedEvent] += function;
     }
 
-    public static void Unsubscribe(Parameter subscribedEvent, EventCallback function)
+    public static void Unsubscribe(Parameter subscribedEvent, Action<object[]> function)
     {
         if (eventDictionary == null)
             return;
