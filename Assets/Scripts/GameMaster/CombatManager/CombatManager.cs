@@ -89,7 +89,7 @@ public class CombatManager : MonoBehaviour
     {
         MakeAction(Parameter.Attack);
     }
-    public void OnMagicButtonDown()
+    public void OnMagicButtonDown(int p)
     {
         MakeAction(Parameter.Magic);
     }
@@ -108,7 +108,6 @@ public class CombatManager : MonoBehaviour
     {
         combatOptionsPanel.SetActive(state);
     }
-
 
     public enum Parameter
     {

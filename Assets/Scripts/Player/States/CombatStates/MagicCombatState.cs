@@ -7,7 +7,6 @@ namespace PlayerStates
     public class MagicCombatState : BaseStateMachineState
     {
         private StateMachine stateMachine;
-        private float time = 2;
 
         private Stage stage;
 

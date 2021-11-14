@@ -17,7 +17,6 @@ namespace PlayerStates
 
         private void OnActionSelected(params object[] objects)
         {
-            Debug.Log((CombatManager.Parameter)objects[0]);
             switch ((CombatManager.Parameter)objects[0])
             {
                 case CombatManager.Parameter.Attack:
@@ -44,6 +43,7 @@ namespace PlayerStates
 
         public override void OnExitState()
         {
+            
         }
     }
 }
