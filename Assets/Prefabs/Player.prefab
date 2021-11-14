@@ -160,10 +160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b02d0490ea1a244aa3a96228e0c710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 7b210ebb60cd90846bdd4eeb3371a834, type: 2}
   speed: 10
   jumpForce: 10
   fallGravityScale: 4
   defaultGravityScale: 2
   team:
   - {fileID: 1584616911168802143}
-  stats: {fileID: 11400000, guid: 7b210ebb60cd90846bdd4eeb3371a834, type: 2}

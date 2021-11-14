@@ -8,11 +8,15 @@ namespace EnemyStates
     {
         private StateMachine stateMachine;
         private Rigidbody2D rigidbody;
+        private EnemyModel model;
+        private EnemyView view;
 
-        public IdleCombatState(StateMachine stateMachine, Rigidbody2D rigidbody)
+        public IdleCombatState(StateMachine stateMachine, Rigidbody2D rigidbody, EnemyModel model, EnemyView view)
         {
             this.stateMachine = stateMachine;
             this.rigidbody = rigidbody;
+            this.model = model;
+            this.view = view;
         }
 
         public override void ExecuteState()
@@ -21,6 +25,7 @@ namespace EnemyStates
 
         public override void OnEnterState(params object[] objects)
         {
+            model.sprite.flipX = false;
             rigidbody.velocity = Vector2.zero;
             EventManager.Subscribe(EventManager.Parameter.TurnStarts, OnTurnStars);
         }

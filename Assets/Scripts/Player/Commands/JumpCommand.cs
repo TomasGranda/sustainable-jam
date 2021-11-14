@@ -23,7 +23,7 @@ public class JumpCommand : Command
 
     public void ExecuteDown()
     {
-        if (Physics2D.Raycast(model.transform.position, Vector2.down, 0.6f, floorLayer))
+        if (Physics2D.Raycast(model.transform.position, Vector2.down, 1.2f, floorLayer))
         {
             rigidbody.AddForce(Vector2.up * model.jumpForce, ForceMode2D.Impulse);
         }
@@ -37,6 +37,14 @@ public class JumpCommand : Command
 
     private void Always()
     {
+        if (Physics2D.Raycast(model.transform.position, Vector2.down, 1.2f, floorLayer))
+        {
+            view.animator.SetBool("Jump", false);
+        }
+        else
+        {
+            view.animator.SetBool("Jump", true);
+        }
         rigidbody.gravityScale = rigidbody.velocity.y < 0 ? model.fallGravityScale : model.defaultGravityScale;
     }
 }

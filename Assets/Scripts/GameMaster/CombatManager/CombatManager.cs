@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class CombatManager : MonoBehaviour
 {
-    private List<Transform> playerTeam;
+    private GameObject playerTeam;
 
-    private List<Transform> enemyTeam;
+    private GameObject enemyTeam;
 
     private Vector3 playerPosition;
 
@@ -48,6 +48,8 @@ public class CombatManager : MonoBehaviour
         currentStage = (Stage)objects[0];
         List<GameObject> enemyTeam = (List<GameObject>)objects[1];
         List<GameObject> playerTeam = (List<GameObject>)objects[2];
+        this.playerTeam = playerTeam.First();
+        this.enemyTeam = enemyTeam.First();
 
         SetFightersPositions(currentStage, enemyTeam, playerTeam);
 
@@ -57,6 +59,16 @@ public class CombatManager : MonoBehaviour
         currentStage.stageCamera.SetActive(true);
 
         StartTurn();
+    }
+
+    private void MakeEnemyAttack()
+    {
+        playerTeam.GetComponent<PlayerModel>().life -= 5;
+    }
+
+    private void MakePlayerAttack()
+    {
+        enemyTeam.GetComponent<EnemyModel>().life -= 10;
     }
 
     private void SetTurnList(List<BaseFighter> enemyTeam, List<BaseFighter> playerTeam)
@@ -73,14 +85,14 @@ public class CombatManager : MonoBehaviour
         for (var i = 0; i < stage.enemyTeamPositions.Count; i++)
         {
             if (enemyTeam[i] != null)
-                enemyTeam[i].transform.position = stage.enemyTeamPositions[i].position;
+                enemyTeam[i].transform.position = (Vector3.up * 2) + stage.enemyTeamPositions[i].position;
             else break;
         }
 
         for (var i = 0; i < stage.playerTeamPositions.Count; i++)
         {
             if (playerTeam[i] != null)
-                playerTeam[i].transform.position = stage.playerTeamPositions[i].position;
+                playerTeam[i].transform.position = (Vector3.up * 2) + stage.playerTeamPositions[i].position;
             else break;
         }
     }

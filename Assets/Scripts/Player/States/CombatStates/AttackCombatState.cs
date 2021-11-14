@@ -7,12 +7,15 @@ namespace PlayerStates
     public class AttackCombatState : BaseStateMachineState
     {
         private StateMachine stateMachine;
-
+        private PlayerModel model;
+        private PlayerView view;
         private Stage stage;
 
-        public AttackCombatState(StateMachine stateMachine)
+        public AttackCombatState(StateMachine stateMachine, PlayerModel model, PlayerView view)
         {
             this.stateMachine = stateMachine;
+            this.model = model;
+            this.view = view;
         }
 
         public override void ExecuteState()
@@ -36,6 +39,7 @@ namespace PlayerStates
 
         public override void OnExitState()
         {
+            view.animator.SetTrigger("Attack");
             EventManager.CallEvent(EventManager.Parameter.TurnEnds);
         }
     }

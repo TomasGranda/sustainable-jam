@@ -18,10 +18,10 @@ public class EnemyController : MonoBehaviour
 
         stateMachine = new StateMachine();
 
-        IdleCombatState idleCombatState = new IdleCombatState(stateMachine, GetComponent<Rigidbody2D>());
-        TurnCombatState turnCombatState = new TurnCombatState(stateMachine);
+        IdleCombatState idleCombatState = new IdleCombatState(stateMachine, GetComponent<Rigidbody2D>(), model, view);
+        TurnCombatState turnCombatState = new TurnCombatState(stateMachine, view);
 
-        MovementState movementState = new MovementState(stateMachine, GetComponent<Rigidbody2D>());
+        MovementState movementState = new MovementState(stateMachine, GetComponent<Rigidbody2D>(), model);
 
         idleCombatState.AddTransition(turnCombatState);
         turnCombatState.AddTransition(idleCombatState);

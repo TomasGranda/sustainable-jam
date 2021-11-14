@@ -7,20 +7,30 @@ namespace EnemyStates
     public class TurnCombatState : BaseStateMachineState
     {
         private StateMachine stateMachine;
-
+        private EnemyView view;
         private float time = 2;
+        private float time2 = 0.5f;
 
-        public TurnCombatState(StateMachine stateMachine)
+        public TurnCombatState(StateMachine stateMachine, EnemyView view)
         {
             this.stateMachine = stateMachine;
+            this.view = view;
         }
 
         public override void ExecuteState()
         {
+            time2 -= Time.deltaTime;
+            if (time2 <= 0)
+            {
+                time2 = 0.5f;
+                view.animator.SetBool("Attack", true);
+            }
+
             time -= Time.deltaTime;
             if (time <= 0)
             {
-                time = 2;
+                view.animator.SetBool("Attack", false);
+                time = 1.5f;
                 stateMachine.Transition<IdleCombatState>();
             }
         }

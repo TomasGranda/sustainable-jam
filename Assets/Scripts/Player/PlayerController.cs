@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
         stateMachine = new StateMachine();
 
         MovementState movementState = new MovementState(stateMachine, model, view, GetComponent<Rigidbody2D>());
-        IdleCombatState idleCombatState = new IdleCombatState(stateMachine, GetComponent<Rigidbody2D>());
+        IdleCombatState idleCombatState = new IdleCombatState(stateMachine, GetComponent<Rigidbody2D>(), view, model);
         TurnCombatState turnCombatState = new TurnCombatState(stateMachine);
-        AttackCombatState attackCombatState = new AttackCombatState(stateMachine);
+        AttackCombatState attackCombatState = new AttackCombatState(stateMachine, model, view);
         MagicCombatState magicCombatState = new MagicCombatState(stateMachine);
 
         movementState.AddTransition(idleCombatState);
