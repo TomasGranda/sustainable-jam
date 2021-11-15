@@ -39,6 +39,7 @@ namespace PlayerStates
 
         public override void OnExitState()
         {
+            EventManager.CallEvent(EventManager.Parameter.PlayerAttack);
             view.animator.SetTrigger("Attack");
             EventManager.CallEvent(EventManager.Parameter.TurnEnds);
         }

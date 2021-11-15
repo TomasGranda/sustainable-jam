@@ -33,7 +33,7 @@ namespace EnemyStates
         private void OnTurnStars(params object[] objects)
         {
             var fighter = (BaseFighter)objects[0];
-            if (fighter.name == rigidbody.name)
+            if (fighter.gameObject.name == rigidbody.name)
             {
                 stateMachine.Transition<TurnCombatState>();
             }

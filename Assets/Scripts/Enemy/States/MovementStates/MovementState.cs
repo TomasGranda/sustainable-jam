@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace EnemyStates
 {
@@ -43,9 +44,13 @@ namespace EnemyStates
             }
         }
 
-        private void ToCombat(params object[] _)
+        private void ToCombat(params object[] objects)
         {
-            stateMachine.Transition<IdleCombatState>();
+            var fighter = ((List<GameObject>)objects[1]).First().GetComponent<BaseFighter>();
+            if (fighter.gameObject.name == rigidbody.name)
+            {
+                stateMachine.Transition<IdleCombatState>();
+            }
         }
 
         public override void OnEnterState(params object[] objects)

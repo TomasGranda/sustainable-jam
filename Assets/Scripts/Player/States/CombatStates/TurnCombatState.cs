@@ -43,7 +43,7 @@ namespace PlayerStates
 
         public override void OnExitState()
         {
-            
+
         }
     }
 }

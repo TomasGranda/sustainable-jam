@@ -18,6 +18,17 @@ public class EnemyModel : BaseFighter
 
     public SpriteRenderer sprite;
 
+    public void DestroyGM()
+    {
+        StartCoroutine(Destroy());
+    }
+
+    private IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(1);
+        transform.position = Vector2.down * 20000;
+    }
+
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();

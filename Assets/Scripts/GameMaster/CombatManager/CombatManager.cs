@@ -18,7 +18,13 @@ public class CombatManager : MonoBehaviour
 
     private Stage currentStage;
 
+    public Camera mainCamera;
+
     private int currentTurn = 0;
+
+    private float time = 0.5f;
+
+    private bool combat = false;
 
     private void Start()
     {
@@ -34,17 +40,26 @@ public class CombatManager : MonoBehaviour
         if (currentTurn > turnList.Count - 1)
             currentTurn = 0;
 
-        StartTurn();
+        StartCoroutine(StartTurn());
     }
 
-    private void StartTurn()
+    private IEnumerator StartTurn()
     {
-        SetCombatOptions(turnList[currentTurn].stats.allied);
-        EventManager.CallEvent(EventManager.Parameter.TurnStarts, turnList[currentTurn]);
+        yield return new WaitForSeconds(0.5f);
+        if (combat)
+        {
+            SetCombatOptions(turnList[currentTurn].stats.allied);
+            EventManager.CallEvent(EventManager.Parameter.TurnStarts, turnList[currentTurn]);
+        }
     }
 
     private void StartCombat(params object[] objects)
     {
+        combat = true;
+        EventManager.Subscribe(EventManager.Parameter.EnemyAttack, MakeEnemyAttack);
+        EventManager.Subscribe(EventManager.Parameter.PlayerAttack, MakePlayerAttack);
+        EventManager.Subscribe(EventManager.Parameter.EndCombat, EndCombat);
+
         currentStage = (Stage)objects[0];
         List<GameObject> enemyTeam = (List<GameObject>)objects[1];
         List<GameObject> playerTeam = (List<GameObject>)objects[2];
@@ -55,18 +70,25 @@ public class CombatManager : MonoBehaviour
 
         SetTurnList(enemyTeam.Select((gm) => gm.GetComponent<BaseFighter>()).ToList(), playerTeam.Select((gm) => gm.GetComponent<BaseFighter>()).ToList());
 
-        Camera.main.gameObject.SetActive(false);
+        mainCamera.gameObject.SetActive(false);
         currentStage.stageCamera.SetActive(true);
 
-        StartTurn();
+        StartCoroutine(StartTurn());
     }
 
-    private void MakeEnemyAttack()
+    private void EndCombat(params object[] objects)
+    {
+        StartCoroutine(UnSetCombatCamera());
+    }
+
+
+
+    private void MakeEnemyAttack(params object[] objects)
     {
         playerTeam.GetComponent<PlayerModel>().life -= 5;
     }
 
-    private void MakePlayerAttack()
+    private void MakePlayerAttack(params object[] objects)
     {
         enemyTeam.GetComponent<EnemyModel>().life -= 10;
     }
@@ -78,6 +100,23 @@ public class CombatManager : MonoBehaviour
 
         // Order By Initiative
         turnList.Sort((figher1, figher2) => figher2.stats.initiative - figher1.stats.initiative);
+    }
+
+    private IEnumerator UnSetCombatCamera()
+    {
+        yield return new WaitForSeconds(1);
+        combat = false;
+        EventManager.Unsubscribe(EventManager.Parameter.EnemyAttack, MakeEnemyAttack);
+        EventManager.Unsubscribe(EventManager.Parameter.PlayerAttack, MakePlayerAttack);
+
+        enemyTeam = null;
+        playerTeam = null;
+
+        turnList.Clear();
+
+        mainCamera.gameObject.SetActive(true);
+        currentStage.stageCamera.SetActive(false);
+        currentStage = null;
     }
 
     private void SetFightersPositions(Stage stage, List<GameObject> enemyTeam, List<GameObject> playerTeam)

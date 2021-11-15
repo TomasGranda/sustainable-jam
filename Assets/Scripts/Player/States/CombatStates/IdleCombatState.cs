@@ -26,11 +26,21 @@ namespace PlayerStates
 
         public override void OnEnterState(params object[] objects)
         {
+            if (model.life <= 0)
+            {
+                view.animator.SetTrigger("Death");
+            }
             model.sprite.flipX = false;
             view.animator.SetFloat("Speed", 0);
             view.animator.SetBool("Jump", false);
             rigidbody.velocity = Vector2.zero;
             EventManager.Subscribe(EventManager.Parameter.TurnStarts, OnTurnStars);
+            EventManager.Subscribe(EventManager.Parameter.EndCombat, EndCombat);
+        }
+
+        private void EndCombat(params object[] objects)
+        {
+            model.EndCombat(stateMachine);
         }
 
         private void OnTurnStars(params object[] objects)

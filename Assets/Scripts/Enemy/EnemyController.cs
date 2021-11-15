@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
         stateMachine = new StateMachine();
 
         IdleCombatState idleCombatState = new IdleCombatState(stateMachine, GetComponent<Rigidbody2D>(), model, view);
-        TurnCombatState turnCombatState = new TurnCombatState(stateMachine, view);
+        TurnCombatState turnCombatState = new TurnCombatState(stateMachine, view, model);
 
         MovementState movementState = new MovementState(stateMachine, GetComponent<Rigidbody2D>(), model);
 

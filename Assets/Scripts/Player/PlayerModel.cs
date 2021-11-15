@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerStates;
 
 public class PlayerModel : BaseFighter
 {
@@ -23,5 +24,16 @@ public class PlayerModel : BaseFighter
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+    }
+
+    public void EndCombat(StateMachine stateMachine)
+    {
+        StartCoroutine(EndCombatTransition(stateMachine));
+    }
+
+    private IEnumerator EndCombatTransition(StateMachine stateMachine)
+    {
+        yield return new WaitForSeconds(1);
+        stateMachine.Transition<MovementState>();
     }
 }

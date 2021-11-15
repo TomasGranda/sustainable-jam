@@ -12,6 +12,9 @@ public class EventManager
         TurnEnds,
         TurnStarts,
         Action,
+        EnemyAttack,
+        PlayerAttack,
+        EndCombat,
     }
 
     public static void Subscribe(Parameter subscribedEvent, Action<object[]> function)
