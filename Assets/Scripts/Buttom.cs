@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Buttom : MonoBehaviour, IPointerDownHandler
+public class Buttom : MonoBehaviour
 {
-    public Parameter Action;
-
-    public enum Parameter
+    public void InitGame(GameObject panel)
     {
-        Attack,
-        Magic,
-        Skip
+        panel.SetActive(false);
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-
-    }
-
 }
