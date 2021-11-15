@@ -21,8 +21,15 @@ public class PlayerModel : BaseFighter
 
     public SpriteRenderer sprite;
 
+    public AudioClip attackAudio;
+    public AudioClip moveAudio;
+    public AudioClip jumpAudio;
+
+    public AudioSource audioSource;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -35,5 +42,20 @@ public class PlayerModel : BaseFighter
     {
         yield return new WaitForSeconds(1);
         stateMachine.Transition<MovementState>();
+    }
+
+    public void MoveSound()
+    {
+        audioSource.PlayOneShot(moveAudio);
+    }
+
+    public void JumpSound()
+    {
+        audioSource.PlayOneShot(jumpAudio);
+    }
+
+    public void AttackSound()
+    {
+        audioSource.PlayOneShot(attackAudio);
     }
 }

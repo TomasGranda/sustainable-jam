@@ -29,7 +29,6 @@ namespace EnemyStates
                 {
                     time2 = 0.5f;
                     view.animator.SetBool("Attack", true);
-                    EventManager.CallEvent(EventManager.Parameter.EnemyAttack);
                 }
 
                 time -= Time.deltaTime;
@@ -50,11 +49,11 @@ namespace EnemyStates
                 EventManager.CallEvent(EventManager.Parameter.EndCombat);
                 model.DestroyGM();
             }
-            Debug.Log("El Enemy entro en estado de turno");
         }
 
         public override void OnExitState()
         {
+            EventManager.CallEvent(EventManager.Parameter.EnemyAttack);
             EventManager.CallEvent(EventManager.Parameter.TurnEnds);
         }
     }

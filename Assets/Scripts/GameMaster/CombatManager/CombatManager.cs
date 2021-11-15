@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
@@ -15,6 +17,10 @@ public class CombatManager : MonoBehaviour
     private List<BaseFighter> turnList = new List<BaseFighter>();
 
     public GameObject combatOptionsPanel;
+    public GameObject combatOptionsPanel2;
+
+    public AudioClip combatAudio;
+    public AudioClip levelAudio;
 
     private Stage currentStage;
 
@@ -55,6 +61,8 @@ public class CombatManager : MonoBehaviour
 
     private void StartCombat(params object[] objects)
     {
+        GetComponent<AudioSource>().clip = combatAudio;
+        GetComponent<AudioSource>().Play();
         combat = true;
         EventManager.Subscribe(EventManager.Parameter.EnemyAttack, MakeEnemyAttack);
         EventManager.Subscribe(EventManager.Parameter.PlayerAttack, MakePlayerAttack);
@@ -73,6 +81,7 @@ public class CombatManager : MonoBehaviour
         mainCamera.gameObject.SetActive(false);
         currentStage.stageCamera.SetActive(true);
 
+        combatOptionsPanel2.SetActive(true);
         StartCoroutine(StartTurn());
     }
 
@@ -86,11 +95,15 @@ public class CombatManager : MonoBehaviour
     private void MakeEnemyAttack(params object[] objects)
     {
         playerTeam.GetComponent<PlayerModel>().life -= 5;
+        var playerBar = combatOptionsPanel2.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        playerBar.fillAmount = playerTeam.GetComponent<PlayerModel>().life / playerTeam.GetComponent<PlayerModel>().maxLife;
     }
 
     private void MakePlayerAttack(params object[] objects)
     {
         enemyTeam.GetComponent<EnemyModel>().life -= 10;
+        var enemyBar = combatOptionsPanel2.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        enemyBar.fillAmount = enemyTeam.GetComponent<EnemyModel>().life / enemyTeam.GetComponent<EnemyModel>().maxLife;
     }
 
     private void SetTurnList(List<BaseFighter> enemyTeam, List<BaseFighter> playerTeam)
@@ -105,6 +118,10 @@ public class CombatManager : MonoBehaviour
     private IEnumerator UnSetCombatCamera()
     {
         yield return new WaitForSeconds(1);
+        if (enemyTeam.name == "EnemyBoss")
+        {
+            SceneManager.LoadScene("CreditsScene");
+        }
         combat = false;
         EventManager.Unsubscribe(EventManager.Parameter.EnemyAttack, MakeEnemyAttack);
         EventManager.Unsubscribe(EventManager.Parameter.PlayerAttack, MakePlayerAttack);
@@ -113,10 +130,16 @@ public class CombatManager : MonoBehaviour
         playerTeam = null;
 
         turnList.Clear();
+        combatOptionsPanel2.SetActive(false);
 
         mainCamera.gameObject.SetActive(true);
         currentStage.stageCamera.SetActive(false);
         currentStage = null;
+        var enemyBar = combatOptionsPanel2.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        enemyBar.fillAmount = 1;
+        GetComponent<AudioSource>().clip = levelAudio;
+        GetComponent<AudioSource>().Play();
+
     }
 
     private void SetFightersPositions(Stage stage, List<GameObject> enemyTeam, List<GameObject> playerTeam)

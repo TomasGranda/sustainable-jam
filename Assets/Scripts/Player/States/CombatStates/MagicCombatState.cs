@@ -30,7 +30,6 @@ namespace PlayerStates
 
         public override void OnEnterState(params object[] objects)
         {
-            Debug.Log("El Player entro en estado de magia");
             stage = (Stage)objects[0];
         }
 

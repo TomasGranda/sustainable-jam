@@ -33,7 +33,6 @@ namespace PlayerStates
 
         public override void OnEnterState(params object[] objects)
         {
-            Debug.Log("El Player entro en estado de ataque");
             stage = (Stage)objects[0];
         }
 

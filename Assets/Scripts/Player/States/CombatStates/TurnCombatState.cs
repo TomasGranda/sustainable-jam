@@ -38,7 +38,6 @@ namespace PlayerStates
         public override void OnEnterState(params object[] objects)
         {
             EventManager.Subscribe(EventManager.Parameter.Action, OnActionSelected);
-            Debug.Log("El Player entro en estado de turno");
         }
 
         public override void OnExitState()
